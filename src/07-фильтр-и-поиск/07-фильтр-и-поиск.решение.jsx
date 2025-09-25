@@ -1,4 +1,4 @@
-import './style.css';
+import '../../styles.css';
 const { useState } = React;
 
 function Filters({ search, setSearch, category, setCategory, inStockOnly, setInStockOnly }) {

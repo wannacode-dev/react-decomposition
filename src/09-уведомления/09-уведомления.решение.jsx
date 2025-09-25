@@ -1,4 +1,4 @@
-import './style.css';
+import '../../styles.css';
 const { useState } = React;
 
 function NotificationsHeader({ unreadCount, onMarkAllAsRead }) {
