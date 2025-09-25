@@ -1,0 +1,8 @@
+.product-filter{max-width:900px;margin:16px auto}
+.filters{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.filters input,.filters select{padding:8px;border:1px solid #d1d5db;border-radius:6px}
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.product-item{border:1px solid #e5e7eb;border-radius:8px;padding:12px}
+.in-stock{color:#059669}
+.out-of-stock{color:#b91c1c}
+

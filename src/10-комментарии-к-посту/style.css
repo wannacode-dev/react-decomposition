@@ -1,0 +1,22 @@
+.post-comments{max-width:600px;margin:16px auto;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);padding:20px}
+.comments-header{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f3f4f6}
+.comments-header h4{margin:0;color:#374151;font-size:18px;font-weight:600}
+.comments-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;max-height:400px;overflow-y:auto}
+.comment{border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#fafafa;transition:all 0.2s}
+.comment:hover{background:#f9fafb;border-color:#d1d5db;transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.comment-author{display:flex;gap:8px;align-items:center;color:#6b7280;margin-bottom:8px}
+.comment-author strong{color:#374151;font-weight:600}
+.comment-author .time{font-size:12px;color:#9ca3af}
+.comment-text{margin:8px 0;color:#374151;line-height:1.5;font-size:14px}
+.comment-actions{display:flex;gap:12px;margin-top:8px}
+.comment-actions button{padding:6px 12px;border:1px solid #d1d5db;border-radius:6px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:4px}
+.comment-actions button:hover{background:#f3f4f6;border-color:#9ca3af;transform:translateY(-1px)}
+.comment-actions button.liked{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.comment-actions button.liked:hover{background:#fee2e2}
+.add-comment{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:16px}
+.add-comment textarea{width:100%;min-height:80px;padding:12px;border:1px solid #d1d5db;border-radius:6px;resize:vertical;font-family:inherit;font-size:14px;line-height:1.4;outline:none;transition:border-color 0.2s}
+.add-comment textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+.add-comment button{margin-top:12px;padding:10px 16px;border:none;border-radius:6px;background:#3b82f6;color:white;cursor:pointer;font-size:14px;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.add-comment button:hover:not(:disabled){background:#2563eb;transform:translateY(-1px)}
+.add-comment button:disabled{background:#9ca3af;cursor:not-allowed;transform:none}
+
