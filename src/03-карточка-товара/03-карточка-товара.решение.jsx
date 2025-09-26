@@ -1,4 +1,4 @@
-import '../../styles.css';
+import './style.css';
 const { useState } = React;
 
 function Gallery({ currentImage, onImageClick, images }) {
