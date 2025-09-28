@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting…</title>
-    <meta http-equiv="refresh" content="0; url=/play.html">
+    
     <script>
       (function(){
         try {
@@ -15,16 +15,20 @@
           if (!hasFile) {
             var path = location.pathname || '/';
             var match = /^\/(?:@src|src)\/.+\.(?:jsx|tsx|js|ts|html)$/i.test(path);
-            var file = match
-              ? path.replace(/^\/\@src\//, '/src/')
-              : '/src/01-профиль-пользователя/01-профиль-пользователя.проблема.jsx';
-            params.set('file', file);
 
-            console.log('Обработка файла:', file);
+            console.log('Найден путь в index.html:', match);
+            if (match) {
+              var fileFromPath = path.replace(/^\/\@src\//, '/src/');
+              params.set('file', fileFromPath);
+              console.log('Найденый файл в index.html:', fileFromPath);
+            }
           }
 
-          var target = '/play.html?' + params.toString() + hash;
-          if (location.pathname !== '/play.html' || !hasFile) location.replace(target);
+          console.log('Параметры в index.html:', params.toString());
+          var query = params.toString();
+          var target = '/play.html' + (query ? ('?' + query) : '') + hash;
+          console.log('Целевой URL в index.html:', target);
+          if (location.pathname !== '/play.html') location.replace(target);
         } catch (e) {
           console.error('Ошибка при обработке файла:', e);
           // no-op
