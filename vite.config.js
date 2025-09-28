@@ -20,8 +20,8 @@ function computeOpenPath() {
     ).join('/');
 
     const webPath = ('/' + decodedCandidate.replace(/\\/g, '/').replace(/^\/+/, ''));
-    // Всегда открываем через index.html (бывш. play.html)
-    return `/index.html?file=${encodeURIComponent(webPath)}`;
+    // Всегда открываем через play.html, чтобы унифицировать поведение в StackBlitz
+    return `/play.html?file=${encodeURIComponent(webPath)}`;
   } catch {
     return false;
   }
@@ -31,23 +31,23 @@ export default defineConfig({
   plugins: [
     react(),
     {
-      name: 'play-redirect-html-to-index',
+      name: 'play-redirect-html-to-play',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
           if (process.env.npm_lifecycle_event === 'play') {
             const url = req.url || '';
-            // Перенаправляем прямые запросы к src/**/*.html в /index.html?file=...
+            // Перенаправляем прямые запросы к src/**/*.html в /play.html?file=...
             if (url.startsWith('/src/') && url.endsWith('.html') && !url.includes('html-proxy')) {
               res.statusCode = 302;
-              res.setHeader('Location', `/index.html?file=${encodeURIComponent(url)}`);
+              res.setHeader('Location', `/play.html?file=${encodeURIComponent(url)}`);
               res.end();
               return;
             }
-            // Поддержка алиаса @src — перенаправим /@src/... на /index.html
+            // Поддержка алиаса @src — перенаправим /@src/... на /play.html
             if (url.startsWith('/@src/') && url.endsWith('.html') && !url.includes('html-proxy')) {
               const real = url.replace(/^\/\@src\//, '/src/');
               res.statusCode = 302;
-              res.setHeader('Location', `/index.html?file=${encodeURIComponent(real)}`);
+              res.setHeader('Location', `/play.html?file=${encodeURIComponent(real)}`);
               res.end();
               return;
             }
