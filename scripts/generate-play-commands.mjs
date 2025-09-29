@@ -35,11 +35,13 @@ function buildScriptName(relativeFile) {
 function buildCommand(relativeFile) {
   const ext = path.extname(relativeFile).toLowerCase();
   const posixPath = toPosix(path.join('src', relativeFile));
+  // Передаём путь через переменную окружения VITE_ENTRY
   if (ext === '.html') {
-    return `vite --open ${posixPath}`;
+    // Для html хотим открыть сам файл, runner не нужен
+    return `cross-env VITE_ENTRY=${posixPath} vite`;
   }
-  // jsx/tsx/js/ts handled by runner via ?f
-  return `vite --open \"/?f=${posixPath}\"`;
+  // jsx/tsx/js/ts — runner прочитает VITE_ENTRY и импортнёт модуль
+  return `cross-env VITE_ENTRY=${posixPath} vite`;
 }
 
 function isTaskFile(filePath) {

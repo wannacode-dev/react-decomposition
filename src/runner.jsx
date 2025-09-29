@@ -42,6 +42,10 @@ async function run() {
   }
   const path = normalizeToVitePath(entry);
   try {
+    if (path.toLowerCase().endsWith('.html')) {
+      window.location.replace(path);
+      return;
+    }
     await import(/* @vite-ignore */ path);
   } catch (error) {
     const el = document.getElementById('root');
