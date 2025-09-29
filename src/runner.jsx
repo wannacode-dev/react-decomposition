@@ -4,7 +4,9 @@ function getEntryFromEnvOrUrl() {
     return fromEnv;
   }
   const url = new URL(window.location.href);
+  console.log('url', url);
   const fromQuery = url.searchParams.get('f');
+  console.log('fromQuery', fromQuery);
   return fromQuery || null;
 }
 
@@ -29,6 +31,8 @@ async function run() {
     console.error(e);
   }
   const entry = getEntryFromEnvOrUrl();
+
+  console.log('entry', entry);
   if (!entry) {
     const el = document.getElementById('root');
     if (el) {
