@@ -1,45 +1,13 @@
 <!doctype html>
-<html lang="ru">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting…</title>
-    
-    <script>
-      (function(){
-        try {
-          var params = new URLSearchParams(location.search || '');
-          var hasFile = params.has('file');
-          var hash = location.hash || '';
-
-          if (!hasFile) {
-            var path = location.pathname || '/';
-            var match = /^\/(?:@src|src)\/.+\.(?:jsx|tsx|js|ts|html)$/i.test(path);
-
-            console.log('Найден путь в index.html:', match);
-            if (match) {
-              var fileFromPath = path.replace(/^\/\@src\//, '/src/');
-              params.set('file', fileFromPath);
-              console.log('Найденый файл в index.html:', fileFromPath);
-            }
-          }
-
-          console.log('Параметры в index.html:', params.toString());
-          var query = params.toString();
-          var target = '/play.html' + (query ? ('?' + query) : '') + hash;
-          console.log('Целевой URL в index.html:', target);
-          if (location.pathname !== '/play.html') location.replace(target);
-        } catch (e) {
-          console.error('Ошибка при обработке файла:', e);
-          // no-op
-        }
-      })();
-    </script>
+    <title>Play Runner</title>
   </head>
   <body>
-    <noscript>
-      <a href="/play.html">Перейти к playground</a>
-    </noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/runner.jsx"></script>
   </body>
   </html>
 
