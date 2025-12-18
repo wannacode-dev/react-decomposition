@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import "./style.css";
-const { useState } = React;
-
 function ContactsHeader({ search, setSearch, count }) {
   return (
     <div className="contacts-header">

@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function App() {
     const [products] = useState([
         { id: 1, name: 'Ноутбук', category: 'Электроника', price: 50000, inStock: true },

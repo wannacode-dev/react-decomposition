@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function App() {
     const [comments, setComments] = useState([
         { id: 1, user: 'Алексей', text: 'Отличная статья!', time: '2 часа назад', likes: 5, liked: false },

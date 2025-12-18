@@ -1,6 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState, useEffect } = React;
-
 function Header({ onLogout }) {
     return (
         <header>

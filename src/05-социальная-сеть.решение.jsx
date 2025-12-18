@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function CreatePost({ value, onChange, onCreate, disabled }) {
     return (
         <div className="create-post">

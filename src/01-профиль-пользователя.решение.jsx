@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function ProfileHeader({ avatarSrc, name, role }) {
     return (
         <div className="profile-header">

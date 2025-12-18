@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function App() {
     const [activities, setActivities] = useState([
         { id: 1, type: 'login', text: 'Вы выполнили вход в систему', time: 'Сегодня, 10:30', icon: '🔐', date: new Date() },

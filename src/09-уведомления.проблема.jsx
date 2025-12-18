@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function App() {
     const [notifications, setNotifications] = useState([
         { id: 1, type: 'info', title: 'Новое сообщение', text: 'У вас новое сообщение от Марии', time: '5 мин назад', read: false },

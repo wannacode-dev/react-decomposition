@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
 import './style.css';
-const { useState } = React;
-
 function NotificationsHeader({ unreadCount, onMarkAllAsRead }) {
     return (
         <div className="notifications-header">
