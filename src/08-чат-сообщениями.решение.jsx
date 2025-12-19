@@ -87,4 +87,6 @@ function App() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
 
+// Export for Sandpack SDK
+export default App;
 
