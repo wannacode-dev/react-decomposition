@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 function App() {
     const [posts, setPosts] = useState([
         {
             id: 1,
-            author: { name: 'Иван', avatar: 'avatar.jpeg' },
+            author: { name: 'Иван', avatar: '👨' },
             content: 'Сегодня прекрасный день!',
             likes: 15,
             liked: false,
@@ -16,7 +16,7 @@ function App() {
         },
         {
             id: 2,
-            author: { name: 'Мария', avatar: 'avatar2.jpeg' },
+            author: { name: 'Мария', avatar: '👩' },
             content: 'Только что вернулась с прогулки в парке. Природа прекрасна!',
             likes: 8,
             liked: false,
@@ -31,7 +31,7 @@ function App() {
         if (newPost.trim()) {
             const post = {
                 id: posts.length + 1,
-                author: { name: 'Вы', avatar: 'avatar.jpeg' },
+                author: { name: 'Вы', avatar: '👨' },
                 content: newPost.trim(),
                 likes: 0,
                 liked: false,
@@ -109,7 +109,7 @@ function App() {
             {posts.map(post => (
                 <div key={post.id} className="post">
                     <div className="post-header">
-                        <img src={post.author.avatar} alt="Avatar" />
+                        <div className="avatar-emoji">{post.author.avatar}</div>
                         <strong>{post.author.name}</strong>
                         <span className="post-time">2 часа назад</span>
                     </div>
@@ -160,8 +160,6 @@ function App() {
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 // Export for Sandpack SDK
 export default App;

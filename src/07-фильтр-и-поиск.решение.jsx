@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 function Filters({ search, setSearch, category, setCategory, inStockOnly, setInStockOnly }) {
     return (
@@ -77,8 +77,6 @@ function App() {
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 // Export for Sandpack SDK
 export default App;

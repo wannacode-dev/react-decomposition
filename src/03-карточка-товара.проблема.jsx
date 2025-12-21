@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 function App() {
-    const [currentImage, setCurrentImage] = useState('product.jpeg');
+    const [currentImage, setCurrentImage] = useState('📦');
     const [inCart, setInCart] = useState(false);
     const [quantity, setQuantity] = useState(1);
 
     const images = [
-        { id: 1, src: 'product.jpeg', alt: 'Основное изображение' },
-        { id: 2, src: 'thumb1.jpeg', alt: 'Изображение 1' },
-        { id: 3, src: 'thumb2.jpeg', alt: 'Изображение 2' }
+        { id: 1, src: '📦', alt: 'Основное изображение' },
+        { id: 2, src: '🛍️', alt: 'Изображение 1' },
+        { id: 3, src: '🎁', alt: 'Изображение 2' }
     ];
 
     const handleImageClick = (imageSrc) => {
@@ -29,20 +29,14 @@ function App() {
     return (
         <div className="product-page">
             <div className="product-gallery">
-                <img 
-                    src={currentImage} 
-                    alt="Product" 
-                    className="main-image"
-                />
+                <div className="main-image product-emoji">{currentImage}</div>
                 <div className="thumbnails">
                     {images.map(image => (
-                        <img 
+                        <div 
                             key={image.id}
-                            src={image.src} 
-                            alt={image.alt}
-                            className={`thumbnail ${currentImage === image.src ? 'active' : ''}`}
+                            className={`thumbnail product-emoji ${currentImage === image.src ? 'active' : ''}`}
                             onClick={() => handleImageClick(image.src)}
-                        />
+                        >{image.src}</div>
                     ))}
                 </div>
             </div>
@@ -81,8 +75,6 @@ function App() {
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 // Export for Sandpack SDK
 export default App;

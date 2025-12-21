@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import "./style.css";
 function App() {
   const [contacts, setContacts] = useState([
@@ -9,7 +9,7 @@ function App() {
         status: "online",
         lastSeen: "только что",
         gender: "female",
-        avatar: "/avatar2.jpeg",
+        avatar: "👩",
       },
       {
         id: 2,
@@ -17,7 +17,7 @@ function App() {
         status: "offline",
         lastSeen: "2 часа назад",
         gender: "male",
-        avatar: "/avatar.jpeg",
+        avatar: "👨",
       },
       {
         id: 3,
@@ -25,7 +25,7 @@ function App() {
         status: "online",
         lastSeen: "5 минут назад",
         gender: "female",
-        avatar: "/avatar3.jpeg",
+        avatar: "👩‍💻",
       },
       {
         id: 4,
@@ -33,7 +33,7 @@ function App() {
         status: "offline",
         lastSeen: "1 день назад",
         gender: "male",
-        avatar: "/avatar5.jpeg",
+        avatar: "🧑",
       },
       {
         id: 5,
@@ -41,7 +41,7 @@ function App() {
         status: "online",
         lastSeen: "только что",
         gender: "female",
-        avatar: "/avatar4.jpeg",
+        avatar: "👨‍💻",
       },
   ]);
   const [search, setSearch] = useState("");
@@ -76,11 +76,7 @@ function App() {
           filteredContacts.map((contact) => (
             <div key={contact.id} className="contact">
               <div className="contact-avatar">
-                <img
-                  src={getAvatarSrc(contact)}
-                  alt={contact.name}
-                  className="avatar-img"
-                />
+                <div className="avatar-emoji">{contact.avatar}</div>
                 <div className={`status ${contact.status}`}></div>
               </div>
               <div className="contact-info">
@@ -109,8 +105,6 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
 
 // Export for Sandpack SDK
 export default App;

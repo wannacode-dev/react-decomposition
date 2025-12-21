@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 function App() {
     const [todos, setTodos] = useState([
@@ -81,8 +81,6 @@ function App() {
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 export default App;
 

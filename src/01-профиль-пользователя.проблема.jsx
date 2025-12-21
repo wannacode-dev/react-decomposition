@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 
 function App() {
     return (
         <div className="profile">
             <div className="profile-header">
-                <img src="avatar.jpeg" alt="Avatar" />
+                <div className="avatar-emoji">👨</div>
                 <h2>Иван Иванов</h2>
                 <p>Frontend-разработчик</p>
             </div>
@@ -19,8 +19,6 @@ function App() {
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 export default App;
 

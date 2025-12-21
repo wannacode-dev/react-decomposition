@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 function ProfileHeader({ avatarSrc, name, role }) {
     return (
         <div className="profile-header">
-            <img src={avatarSrc} alt="Avatar" />
+            <div className="avatar-emoji">{avatarSrc}</div>
             <h2>{name}</h2>
             <p>{role}</p>
         </div>
@@ -24,14 +24,12 @@ function ProfileDetails({ email, phone }) {
 function App() {
     return (
         <div className="profile">
-            <ProfileHeader avatarSrc="avatar.jpeg" name="Иван Иванов" role="Frontend-разработчик" />
+            <ProfileHeader avatarSrc="👨" name="Иван Иванов" role="Frontend-разработчик" />
             <ProfileDetails email="ivan@example.com" phone="+7 999 123-45-67" />
         </div>
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 export default App;
 

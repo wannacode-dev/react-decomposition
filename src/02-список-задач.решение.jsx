@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+ 
 import './style.css';
 function TodoItem({ todo, onToggle, onDelete }) {
     return (
@@ -112,8 +112,6 @@ function App() {
     );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 // Export for Sandpack SDK
 export default App;
