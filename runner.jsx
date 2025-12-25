@@ -16,9 +16,10 @@ function normalizeToVitePath(entry) {
 }
 
 async function run() {
+  let React, ReactDOM;
   try {
-    const React = await import('react');
-    const ReactDOM = await import('react-dom/client');
+    React = await import('react');
+    ReactDOM = await import('react-dom/client');
     if (!window.React) {
       window.React = React;
     }
@@ -42,7 +43,16 @@ async function run() {
       window.location.replace(path);
       return;
     }
-    await import(/* @vite-ignore */ path);
+    const module = await import(/* @vite-ignore */ path);
+    
+    // Если модуль экспортирует default компонент - рендерим его
+    if (module.default && ReactDOM) {
+      const el = document.getElementById('root');
+      if (el) {
+        const root = ReactDOM.createRoot(el);
+        root.render(React.createElement(module.default));
+      }
+    }
   } catch (error) {
     const el = document.getElementById('root');
     if (el) {
