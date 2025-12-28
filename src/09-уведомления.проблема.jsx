@@ -70,6 +70,6 @@ function App() {
 }
 
 
-// Export for Sandpack SDK
+
 export default App;
 
