@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
 import './style.css';
-function ContactsHeader({ search, setSearch, count }) {
+
+function ContactsHeader({ search, onChange, count }) {
     return (
         <div className="contacts-header">
             <h3>Контакты ({count})</h3>
@@ -9,36 +10,69 @@ function ContactsHeader({ search, setSearch, count }) {
                 type="text"
                 placeholder="Поиск контактов..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
             />
         </div>
     );
 }
 
-function ContactItem({ contact, onMessage, getAvatarSrc }) {
+function ContactAvatar({ avatar, status }) {
     return (
-        <div className="contact">
-            <div className="contact-avatar">
-                <div className="avatar-emoji">{contact.avatar}</div>
-                <div className={`status ${contact.status}`}></div>
-            </div>
-            <div className="contact-info">
-                <strong>{contact.name}</strong>
-                <span className="status-text">
-                    {contact.status === 'online' ? 'online' : `был(а) ${contact.lastSeen}`}
-                </span>
-            </div>
-            <button
-                className="message-btn"
-                onClick={() => onMessage(contact.id)}
-            >
-                Написать
-            </button>
+        <div className="contact-avatar">
+            <div className="avatar-emoji">{avatar}</div>
+            <div className={`status ${status}`}></div>
         </div>
     );
 }
 
-function ContactsList({ contacts, onMessage, getAvatarSrc }) {
+function ContactInfo({ name, status, lastSeen }) {
+    const statusText = status === 'online' ? 'online' : `был(а) ${lastSeen}`;
+
+    return (
+        <div className="contact-info">
+            <strong>{name}</strong>
+            <span className="status-text">{statusText}</span>
+        </div>
+    );
+}
+
+function MessageButton({ onMessage }) {
+    return (
+        <button
+            className="message-btn"
+            onClick={onMessage}
+        >
+            Написать
+        </button>
+    );
+}
+
+function ContactItem({ contact, onMessage }) {
+    return (
+        <div className="contact">
+            <ContactAvatar
+                avatar={contact.avatar}
+                status={contact.status}
+            />
+            <ContactInfo
+                name={contact.name}
+                status={contact.status}
+                lastSeen={contact.lastSeen}
+            />
+            <MessageButton onMessage={() => onMessage(contact.id)} />
+        </div>
+    );
+}
+
+function NoContacts() {
+    return (
+        <div className="no-contacts">
+            <p>Контакты не найдены</p>
+        </div>
+    );
+}
+
+function ContactsList({ contacts, onMessage }) {
     return (
         <div className="contacts-list">
             {contacts.length > 0 ? (
@@ -47,13 +81,10 @@ function ContactsList({ contacts, onMessage, getAvatarSrc }) {
                         key={contact.id}
                         contact={contact}
                         onMessage={onMessage}
-                        getAvatarSrc={getAvatarSrc}
                     />
                 ))
             ) : (
-                <div className="no-contacts">
-                    <p>Контакты не найдены</p>
-                </div>
+                <NoContacts />
             )}
         </div>
     );
@@ -113,21 +144,16 @@ function App() {
         alert(`Открываем чат с ${contact.name}`);
     };
 
-    const getAvatarSrc = (contact) => {
-        return contact.avatar;
-    };
-
     return (
         <div className="contacts">
             <ContactsHeader
                 search={search}
-                setSearch={setSearch}
+                onChange={setSearch}
                 count={filteredContacts.length}
             />
             <ContactsList
                 contacts={filteredContacts}
                 onMessage={handleMessage}
-                getAvatarSrc={getAvatarSrc}
             />
         </div>
     );

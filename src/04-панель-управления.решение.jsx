@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import './style.css';
+
 function Header({ onLogout }) {
     return (
         <header>
@@ -50,49 +51,110 @@ function Stats({ stats }) {
     );
 }
 
-function RecentOrdersTable({ orders, sortBy, sortOrder, onSort, getStatusColor, getStatusText }) {
+function StatusBadge({ status }) {
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'completed':
+                return '#10b981';
+            case 'pending':
+                return '#f59e0b';
+            case 'cancelled':
+                return '#ef4444';
+            default:
+                return '#6b7280';
+        }
+    };
+
+    const getStatusText = (status) => {
+        switch (status) {
+            case 'completed':
+                return 'Завершен';
+            case 'pending':
+                return 'В обработке';
+            case 'cancelled':
+                return 'Отменен';
+            default:
+                return status;
+        }
+    };
+
+    return (
+        <span
+            className="status-badge"
+            style={{ backgroundColor: getStatusColor(status) }}
+        >
+            {getStatusText(status)}
+        </span>
+    );
+}
+
+function SortableHeader({ field, currentSortBy, sortOrder, onSort, children }) {
+    const isActive = currentSortBy === field;
+    const arrow = isActive ? (sortOrder === 'asc' ? '↑' : '↓') : '';
+
+    return (
+        <th
+            className="sortable"
+            onClick={() => onSort(field)}
+        >
+            {children} {arrow}
+        </th>
+    );
+}
+
+function OrderRow({ order }) {
+    return (
+        <tr>
+            <td>{order.id}</td>
+            <td>{order.date}</td>
+            <td>{order.amount.toLocaleString()} ₽</td>
+            <td>
+                <StatusBadge status={order.status} />
+            </td>
+        </tr>
+    );
+}
+
+function RecentOrdersTable({ orders, sortBy, sortOrder, onSort }) {
     return (
         <div className="table-section">
             <h2>Последние заказы</h2>
             <table className="recent-orders">
                 <thead>
                     <tr>
-                        <th
-                            className="sortable"
-                            onClick={() => onSort('id')}
+                        <SortableHeader
+                            field="id"
+                            currentSortBy={sortBy}
+                            sortOrder={sortOrder}
+                            onSort={onSort}
                         >
-                            ID заказа {sortBy === 'id' && (sortOrder === 'asc' ? '↑' : '↓')}
-                        </th>
-                        <th
-                            className="sortable"
-                            onClick={() => onSort('date')}
+                            ID заказа
+                        </SortableHeader>
+                        <SortableHeader
+                            field="date"
+                            currentSortBy={sortBy}
+                            sortOrder={sortOrder}
+                            onSort={onSort}
                         >
-                            Дата {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
-                        </th>
-                        <th
-                            className="sortable"
-                            onClick={() => onSort('amount')}
+                            Дата
+                        </SortableHeader>
+                        <SortableHeader
+                            field="amount"
+                            currentSortBy={sortBy}
+                            sortOrder={sortOrder}
+                            onSort={onSort}
                         >
-                            Сумма {sortBy === 'amount' && (sortOrder === 'asc' ? '↑' : '↓')}
-                        </th>
+                            Сумма
+                        </SortableHeader>
                         <th>Статус</th>
                     </tr>
                 </thead>
                 <tbody>
                     {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td>{order.id}</td>
-                            <td>{order.date}</td>
-                            <td>{order.amount.toLocaleString()} ₽</td>
-                            <td>
-                                <span
-                                    className="status-badge"
-                                    style={{ backgroundColor: getStatusColor(order.status) }}
-                                >
-                                    {getStatusText(order.status)}
-                                </span>
-                            </td>
-                        </tr>
+                        <OrderRow
+                            key={order.id}
+                            order={order}
+                        />
                     ))}
                 </tbody>
             </table>
@@ -143,50 +205,28 @@ function App() {
         }
     };
 
-    const sortedOrders = [...orders].sort((a, b) => {
-        let aValue = a[sortBy];
-        let bValue = b[sortBy];
+    const sortOrders = (orders, sortBy, sortOrder) => {
+        return [...orders].sort((a, b) => {
+            let aValue = a[sortBy];
+            let bValue = b[sortBy];
 
-        if (sortBy === 'amount') {
-            aValue = parseInt(aValue);
-            bValue = parseInt(bValue);
-        } else if (sortBy === 'date') {
-            aValue = new Date(aValue);
-            bValue = new Date(bValue);
-        }
+            if (sortBy === 'amount') {
+                aValue = parseInt(aValue);
+                bValue = parseInt(bValue);
+            } else if (sortBy === 'date') {
+                aValue = new Date(aValue);
+                bValue = new Date(bValue);
+            }
 
-        if (sortOrder === 'asc') {
-            return aValue > bValue ? 1 : -1;
-        } else {
-            return aValue < bValue ? 1 : -1;
-        }
-    });
-
-    const getStatusColor = (status) => {
-        switch (status) {
-            case 'completed':
-                return '#10b981';
-            case 'pending':
-                return '#f59e0b';
-            case 'cancelled':
-                return '#ef4444';
-            default:
-                return '#6b7280';
-        }
+            if (sortOrder === 'asc') {
+                return aValue > bValue ? 1 : -1;
+            } else {
+                return aValue < bValue ? 1 : -1;
+            }
+        });
     };
 
-    const getStatusText = (status) => {
-        switch (status) {
-            case 'completed':
-                return 'Завершен';
-            case 'pending':
-                return 'В обработке';
-            case 'cancelled':
-                return 'Отменен';
-            default:
-                return status;
-        }
-    };
+    const sortedOrders = sortOrders(orders, sortBy, sortOrder);
 
     return (
         <div className="dashboard">
@@ -197,8 +237,6 @@ function App() {
                 sortBy={sortBy}
                 sortOrder={sortOrder}
                 onSort={handleSort}
-                getStatusColor={getStatusColor}
-                getStatusText={getStatusText}
             />
         </div>
     );

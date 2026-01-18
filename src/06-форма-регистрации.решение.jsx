@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './style.css';
+
 function FormGroup({ label, type, placeholder }) {
     return (
         <div className="form-group">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function App() {
     const [todos, setTodos] = useState([
         { id: 1, text: 'Купить молоко', done: false },

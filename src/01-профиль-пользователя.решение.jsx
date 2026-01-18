@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function ProfileHeader({ avatarSrc, name, role }) {
     return (
         <div className="profile-header">

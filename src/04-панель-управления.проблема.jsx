@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import './style.css';
+
 function App() {
     const [stats, setStats] = useState({
         users: 1234,

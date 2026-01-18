@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function App() {
     const [currentImage, setCurrentImage] = useState('📦');
     const [inCart, setInCart] = useState(false);

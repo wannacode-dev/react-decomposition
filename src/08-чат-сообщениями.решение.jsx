@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function ChatHeader() {
     return (
         <div className="chat-header">
@@ -36,6 +37,12 @@ function Messages({ messages }) {
 }
 
 function MessageInput({ value, onChange, onSend }) {
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            onSend();
+        }
+    };
+
     return (
         <div className="message-input">
             <input
@@ -43,6 +50,7 @@ function MessageInput({ value, onChange, onSend }) {
                 placeholder="Введите сообщение..."
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <button onClick={onSend}>Отправить</button>
         </div>

@@ -1,31 +1,59 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
+function SearchInput({ value, onChange }) {
+    return (
+        <input
+            type="text"
+            placeholder="Поиск товаров..."
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+        />
+    );
+}
+
+function CategorySelect({ value, onChange }) {
+    return (
+        <select
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+        >
+            <option value="Все">Все категории</option>
+            <option value="Электроника">Электроника</option>
+            <option value="Одежда">Одежда</option>
+        </select>
+    );
+}
+
+function InStockCheckbox({ checked, onChange }) {
+    return (
+        <label>
+            <input
+                type="checkbox"
+                checked={checked}
+                onChange={(e) => onChange(e.target.checked)}
+            />
+            Только в наличии
+        </label>
+    );
+}
+
 function Filters({ search, setSearch, category, setCategory, inStockOnly, setInStockOnly }) {
     return (
         <div className="filters">
-            <input
-                type="text"
-                placeholder="Поиск товаров..."
+            <SearchInput
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={setSearch}
             />
-            <select
+            <CategorySelect
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
-            >
-                <option value="Все">Все категории</option>
-                <option value="Электроника">Электроника</option>
-                <option value="Одежда">Одежда</option>
-            </select>
-            <label>
-                <input
-                    type="checkbox"
-                    checked={inStockOnly}
-                    onChange={(e) => setInStockOnly(e.target.checked)}
-                />
-                Только в наличии
-            </label>
+                onChange={setCategory}
+            />
+            <InStockCheckbox
+                checked={inStockOnly}
+                onChange={setInStockOnly}
+            />
         </div>
     );
 }

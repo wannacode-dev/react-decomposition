@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function App() {
     const [contacts, setContacts] = useState([
         {
@@ -53,10 +54,6 @@ function App() {
     const handleMessage = (contactId) => {
         const contact = contacts.find((c) => c.id === contactId);
         alert(`Открываем чат с ${contact.name}`);
-    };
-
-    const getAvatarSrc = (contact) => {
-        return contact.avatar;
     };
 
     return (

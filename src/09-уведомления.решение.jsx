@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function NotificationsHeader({ unreadCount, onMarkAllAsRead }) {
     return (
         <div className="notifications-header">
@@ -15,30 +16,58 @@ function NotificationsHeader({ unreadCount, onMarkAllAsRead }) {
     );
 }
 
+function NotificationIcon({ type }) {
+    const getIcon = () => {
+        switch (type) {
+            case 'info':
+                return 'ℹ️';
+            case 'warning':
+                return '⚠️';
+            default:
+                return '';
+        }
+    };
+
+    return <div className="notification-icon">{getIcon()}</div>;
+}
+
+function NotificationContent({ title, text, time }) {
+    return (
+        <div className="notification-content">
+            <h4>{title}</h4>
+            <p>{text}</p>
+            <span className="time">{time}</span>
+        </div>
+    );
+}
+
+function CloseButton({ onClose }) {
+    return (
+        <button
+            className="close-btn"
+            onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+            }}
+        >
+            ×
+        </button>
+    );
+}
+
 function NotificationItem({ notification, onMarkAsRead, onRemove }) {
     return (
         <div
             className={`notification ${notification.read ? 'read' : 'unread'}`}
             onClick={() => !notification.read && onMarkAsRead(notification.id)}
         >
-            <div className="notification-icon">
-                {notification.type === 'info' && 'ℹ️'}
-                {notification.type === 'warning' && '⚠️'}
-            </div>
-            <div className="notification-content">
-                <h4>{notification.title}</h4>
-                <p>{notification.text}</p>
-                <span className="time">{notification.time}</span>
-            </div>
-            <button
-                className="close-btn"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    onRemove(notification.id);
-                }}
-            >
-                ×
-            </button>
+            <NotificationIcon type={notification.type} />
+            <NotificationContent
+                title={notification.title}
+                text={notification.text}
+                time={notification.time}
+            />
+            <CloseButton onClose={() => onRemove(notification.id)} />
         </div>
     );
 }

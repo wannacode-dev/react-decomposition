@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function App() {
     const [products] = useState([
         { id: 1, name: 'Ноутбук', category: 'Электроника', price: 50000, inStock: true },

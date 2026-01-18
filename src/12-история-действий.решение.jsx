@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 import './style.css';
-function ActivityHeader({ filter, onFilterChange, count }) {
+
+function ActivityHeader({ filter, onChange, count }) {
     return (
         <div className="activity-header">
             <h3>История действий ({count})</h3>
             <select
                 value={filter}
-                onChange={onFilterChange}
+                onChange={(e) => onChange(e.target.value)}
             >
                 <option value="all">За все время</option>
                 <option value="today">За сегодня</option>
@@ -17,14 +18,35 @@ function ActivityHeader({ filter, onFilterChange, count }) {
     );
 }
 
+function ActivityIcon({ icon }) {
+    return <div className="activity-icon">{icon}</div>;
+}
+
+function ActivityContent({ text, time }) {
+    return (
+        <div className="activity-content">
+            <p>{text}</p>
+            <span className="activity-time">{time}</span>
+        </div>
+    );
+}
+
 function ActivityItem({ activity }) {
     return (
         <div className="activity-item">
-            <div className="activity-icon">{activity.icon}</div>
-            <div className="activity-content">
-                <p>{activity.text}</p>
-                <span className="activity-time">{activity.time}</span>
-            </div>
+            <ActivityIcon icon={activity.icon} />
+            <ActivityContent
+                text={activity.text}
+                time={activity.time}
+            />
+        </div>
+    );
+}
+
+function NoActivities() {
+    return (
+        <div className="no-activities">
+            <p>Действия не найдены</p>
         </div>
     );
 }
@@ -40,9 +62,7 @@ function ActivityList({ activities }) {
                     />
                 ))
             ) : (
-                <div className="no-activities">
-                    <p>Действия не найдены</p>
-                </div>
+                <NoActivities />
             )}
         </div>
     );
@@ -118,15 +138,11 @@ function App() {
 
     const filteredActivities = getFilteredActivities();
 
-    const handleFilterChange = (e) => {
-        setFilter(e.target.value);
-    };
-
     return (
         <div className="activity-history">
             <ActivityHeader
                 filter={filter}
-                onFilterChange={handleFilterChange}
+                onChange={setFilter}
                 count={filteredActivities.length}
             />
             <ActivityList activities={filteredActivities} />

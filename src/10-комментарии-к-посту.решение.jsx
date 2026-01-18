@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function CommentsHeader({ count }) {
     return (
         <div className="comments-header">
@@ -9,23 +10,53 @@ function CommentsHeader({ count }) {
     );
 }
 
+function CommentAuthor({ user, time }) {
+    return (
+        <div className="comment-author">
+            <strong>{user}</strong>
+            <span className="time">{time}</span>
+        </div>
+    );
+}
+
+function LikeButton({ liked, likes, onLike }) {
+    return (
+        <button
+            className={liked ? 'liked' : ''}
+            onClick={onLike}
+        >
+            {liked ? '❤️' : '🤍'} {likes}
+        </button>
+    );
+}
+
+function CommentActions({ liked, likes, onLike, onReply }) {
+    return (
+        <div className="comment-actions">
+            <LikeButton
+                liked={liked}
+                likes={likes}
+                onLike={onLike}
+            />
+            <button onClick={onReply}>Ответить</button>
+        </div>
+    );
+}
+
 function CommentItem({ comment, onLike, onReply }) {
     return (
         <div className="comment">
-            <div className="comment-author">
-                <strong>{comment.user}</strong>
-                <span className="time">{comment.time}</span>
-            </div>
+            <CommentAuthor
+                user={comment.user}
+                time={comment.time}
+            />
             <p className="comment-text">{comment.text}</p>
-            <div className="comment-actions">
-                <button
-                    className={comment.liked ? 'liked' : ''}
-                    onClick={() => onLike(comment.id)}
-                >
-                    {comment.liked ? '❤️' : '🤍'} {comment.likes}
-                </button>
-                <button onClick={() => onReply(comment.id)}>Ответить</button>
-            </div>
+            <CommentActions
+                liked={comment.liked}
+                likes={comment.likes}
+                onLike={() => onLike(comment.id)}
+                onReply={() => onReply(comment.id)}
+            />
         </div>
     );
 }

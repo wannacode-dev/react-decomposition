@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function CreatePost({ value, onChange, onCreate, disabled }) {
     return (
         <div className="create-post">
@@ -48,33 +49,50 @@ function PostActions({ likes, liked, commentsCount, onLike, onToggleComments }) 
     );
 }
 
-function Comments({ comments, postId, newComment, onCommentChange, onAddComment }) {
+function Comment({ comment }) {
+    return (
+        <div className="comment">
+            <strong>{comment.user}</strong>: {comment.text}
+        </div>
+    );
+}
+
+function AddComment({ value, onChange, onSubmit, disabled }) {
+    return (
+        <div className="add-comment">
+            <input
+                type="text"
+                placeholder="Написать комментарий..."
+                value={value || ''}
+                onChange={(e) => onChange(e.target.value)}
+            />
+            <button
+                onClick={onSubmit}
+                disabled={disabled}
+            >
+                Отправить
+            </button>
+        </div>
+    );
+}
+
+function Comments({ comments, newComment, onCommentChange, onAddComment }) {
     return (
         <div className="comments-section">
             <div className="comments">
                 {comments.map((comment) => (
-                    <div
+                    <Comment
                         key={comment.id}
-                        className="comment"
-                    >
-                        <strong>{comment.user}</strong>: {comment.text}
-                    </div>
+                        comment={comment}
+                    />
                 ))}
             </div>
-            <div className="add-comment">
-                <input
-                    type="text"
-                    placeholder="Написать комментарий..."
-                    value={newComment || ''}
-                    onChange={(e) => onCommentChange(postId, e.target.value)}
-                />
-                <button
-                    onClick={() => onAddComment(postId)}
-                    disabled={!newComment?.trim()}
-                >
-                    Отправить
-                </button>
-            </div>
+            <AddComment
+                value={newComment}
+                onChange={onCommentChange}
+                onSubmit={onAddComment}
+                disabled={!newComment?.trim()}
+            />
         </div>
     );
 }
@@ -86,7 +104,6 @@ function Post({
     newComment,
     onCommentChange,
     onAddComment,
-    onKeyPress,
 }) {
     return (
         <div className="post">
@@ -102,11 +119,9 @@ function Post({
             {post.showComments && (
                 <Comments
                     comments={post.comments}
-                    postId={post.id}
                     newComment={newComment[post.id]}
-                    onCommentChange={onCommentChange}
-                    onAddComment={onAddComment}
-                    onKeyPress={onKeyPress}
+                    onCommentChange={(value) => onCommentChange(post.id, value)}
+                    onAddComment={() => onAddComment(post.id)}
                 />
             )}
         </div>

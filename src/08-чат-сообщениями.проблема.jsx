@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function App() {
     const [messages, setMessages] = useState([
         { id: 1, user: 'Анна', text: 'Привет! Как дела?', time: '10:30', isOwn: false },
@@ -29,7 +30,7 @@ function App() {
         }
     };
 
-    const handleKeyPress = (e) => {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleSendMessage();
         }
@@ -63,7 +64,7 @@ function App() {
                     placeholder="Введите сообщение..."
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onKeyDown={handleKeyDown}
                 />
                 <button onClick={handleSendMessage}>Отправить</button>
             </div>

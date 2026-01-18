@@ -1,21 +1,80 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
+function Thumbnail({ image, isActive, onClick }) {
+    return (
+        <div
+            className={`thumbnail product-emoji ${isActive ? 'active' : ''}`}
+            onClick={() => onClick(image.src)}
+        >
+            {image.src}
+        </div>
+    );
+}
+
 function Gallery({ currentImage, onImageClick, images }) {
     return (
         <div className="product-gallery">
             <div className="main-image product-emoji">{currentImage}</div>
             <div className="thumbnails">
                 {images.map((image) => (
-                    <div
+                    <Thumbnail
                         key={image.id}
-                        className={`thumbnail product-emoji ${currentImage === image.src ? 'active' : ''}`}
-                        onClick={() => onImageClick(image.src)}
-                    >
-                        {image.src}
-                    </div>
+                        image={image}
+                        isActive={currentImage === image.src}
+                        onClick={onImageClick}
+                    />
                 ))}
             </div>
+        </div>
+    );
+}
+
+function ProductHeader({ title, price, rating }) {
+    return (
+        <>
+            <h1>{title}</h1>
+            <p className="price">{price}</p>
+            <div className="rating">{rating}</div>
+        </>
+    );
+}
+
+function QuantitySelector({ quantity, onQuantityChange }) {
+    return (
+        <div className="quantity-selector">
+            <label htmlFor="quantity">Количество:</label>
+            <input
+                id="quantity"
+                type="number"
+                min="1"
+                max="10"
+                value={quantity}
+                onChange={onQuantityChange}
+                className="quantity-input"
+            />
+        </div>
+    );
+}
+
+function AddToCartButton({ inCart, onAddToCart }) {
+    return (
+        <button
+            className={`add-to-cart-btn ${inCart ? 'added' : ''}`}
+            onClick={onAddToCart}
+            disabled={inCart}
+        >
+            {inCart ? '✓ Добавлено в корзину!' : 'Добавить в корзину'}
+        </button>
+    );
+}
+
+function ProductDescription({ description }) {
+    return (
+        <div className="product-description">
+            <h3>Описание товара</h3>
+            <p>{description}</p>
         </div>
     );
 }
@@ -23,38 +82,22 @@ function Gallery({ currentImage, onImageClick, images }) {
 function ProductInfo({ quantity, onQuantityChange, onAddToCart, inCart }) {
     return (
         <div className="product-info">
-            <h1>Название товара</h1>
-            <p className="price">5000 ₽</p>
-            <div className="rating">★★★★☆ (4.2)</div>
-
-            <div className="quantity-selector">
-                <label htmlFor="quantity">Количество:</label>
-                <input
-                    id="quantity"
-                    type="number"
-                    min="1"
-                    max="10"
-                    value={quantity}
-                    onChange={onQuantityChange}
-                    className="quantity-input"
-                />
-            </div>
-
-            <button
-                className={`add-to-cart-btn ${inCart ? 'added' : ''}`}
-                onClick={onAddToCart}
-                disabled={inCart}
-            >
-                {inCart ? '✓ Добавлено в корзину!' : 'Добавить в корзину'}
-            </button>
-
-            <div className="product-description">
-                <h3>Описание товара</h3>
-                <p>
-                    Высококачественный товар с отличными характеристиками. Идеально подходит для
-                    повседневного использования. Гарантия качества и быстрая доставка.
-                </p>
-            </div>
+            <ProductHeader
+                title="Название товара"
+                price="5000 ₽"
+                rating="★★★★☆ (4.2)"
+            />
+            <QuantitySelector
+                quantity={quantity}
+                onQuantityChange={onQuantityChange}
+            />
+            <AddToCartButton
+                inCart={inCart}
+                onAddToCart={onAddToCart}
+            />
+            <ProductDescription
+                description="Высококачественный товар с отличными характеристиками. Идеально подходит для повседневного использования. Гарантия качества и быстрая доставка."
+            />
         </div>
     );
 }

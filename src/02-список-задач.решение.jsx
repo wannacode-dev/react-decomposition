@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import './style.css';
+
 function TodoItem({ todo, onToggle, onDelete }) {
     return (
         <li className={todo.done ? 'completed' : ''}>
@@ -63,6 +64,14 @@ function TodoInput({ value, onChange, onAdd }) {
     );
 }
 
+function TodoHeader({ completedCount, totalCount }) {
+    return (
+        <h1>
+            Мои задачи ({completedCount}/{totalCount})
+        </h1>
+    );
+}
+
 function App() {
     const [todos, setTodos] = useState([
         { id: 1, text: 'Купить молоко', done: false },
@@ -95,9 +104,10 @@ function App() {
 
     return (
         <div className="todo-app">
-            <h1>
-                Мои задачи ({completedCount}/{totalCount})
-            </h1>
+            <TodoHeader
+                completedCount={completedCount}
+                totalCount={totalCount}
+            />
             <TodoListView
                 todos={todos}
                 onToggle={toggleTodo}
