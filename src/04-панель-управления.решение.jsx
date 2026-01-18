@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
- 
+
 import './style.css';
 function Header({ onLogout }) {
     return (
@@ -7,7 +7,10 @@ function Header({ onLogout }) {
             <h1>Панель управления</h1>
             <div className="user-menu">
                 <span>Администратор</span>
-                <button onClick={onLogout} className="logout-btn">
+                <button
+                    onClick={onLogout}
+                    className="logout-btn"
+                >
                     Выйти
                 </button>
             </div>
@@ -28,19 +31,19 @@ function StatCard({ title, value, change }) {
 function Stats({ stats }) {
     return (
         <div className="stats">
-            <StatCard 
-                title="Пользователи" 
-                value={stats.users.toLocaleString()} 
+            <StatCard
+                title="Пользователи"
+                value={stats.users.toLocaleString()}
                 change="+12 за неделю"
             />
-            <StatCard 
-                title="Заказы" 
-                value={stats.orders.toLocaleString()} 
+            <StatCard
+                title="Заказы"
+                value={stats.orders.toLocaleString()}
                 change="+8 за неделю"
             />
-            <StatCard 
-                title="Выручка" 
-                value={`${stats.revenue.toLocaleString()} ₽`} 
+            <StatCard
+                title="Выручка"
+                value={`${stats.revenue.toLocaleString()} ₽`}
                 change="+15% за месяц"
             />
         </div>
@@ -54,19 +57,19 @@ function RecentOrdersTable({ orders, sortBy, sortOrder, onSort, getStatusColor, 
             <table className="recent-orders">
                 <thead>
                     <tr>
-                        <th 
+                        <th
                             className="sortable"
                             onClick={() => onSort('id')}
                         >
                             ID заказа {sortBy === 'id' && (sortOrder === 'asc' ? '↑' : '↓')}
                         </th>
-                        <th 
+                        <th
                             className="sortable"
                             onClick={() => onSort('date')}
                         >
                             Дата {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
                         </th>
-                        <th 
+                        <th
                             className="sortable"
                             onClick={() => onSort('amount')}
                         >
@@ -76,13 +79,13 @@ function RecentOrdersTable({ orders, sortBy, sortOrder, onSort, getStatusColor, 
                     </tr>
                 </thead>
                 <tbody>
-                    {orders.map(order => (
+                    {orders.map((order) => (
                         <tr key={order.id}>
                             <td>{order.id}</td>
                             <td>{order.date}</td>
                             <td>{order.amount.toLocaleString()} ₽</td>
                             <td>
-                                <span 
+                                <span
                                     className="status-badge"
                                     style={{ backgroundColor: getStatusColor(order.status) }}
                                 >
@@ -101,24 +104,24 @@ function App() {
     const [stats, setStats] = useState({
         users: 1234,
         orders: 567,
-        revenue: 125000
+        revenue: 125000,
     });
     const [orders, setOrders] = useState([
         { id: '#12345', date: '2024-01-15', amount: 5000, status: 'completed' },
         { id: '#12346', date: '2024-01-14', amount: 3200, status: 'pending' },
         { id: '#12347', date: '2024-01-13', amount: 7800, status: 'completed' },
         { id: '#12348', date: '2024-01-12', amount: 2100, status: 'cancelled' },
-        { id: '#12349', date: '2024-01-11', amount: 9500, status: 'completed' }
+        { id: '#12349', date: '2024-01-11', amount: 9500, status: 'completed' },
     ]);
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setStats(prevStats => ({
+            setStats((prevStats) => ({
                 users: prevStats.users + Math.floor(Math.random() * 3),
                 orders: prevStats.orders + Math.floor(Math.random() * 2),
-                revenue: prevStats.revenue + Math.floor(Math.random() * 1000)
+                revenue: prevStats.revenue + Math.floor(Math.random() * 1000),
             }));
         }, 5000);
 
@@ -161,19 +164,27 @@ function App() {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'completed': return '#10b981';
-            case 'pending': return '#f59e0b';
-            case 'cancelled': return '#ef4444';
-            default: return '#6b7280';
+            case 'completed':
+                return '#10b981';
+            case 'pending':
+                return '#f59e0b';
+            case 'cancelled':
+                return '#ef4444';
+            default:
+                return '#6b7280';
         }
     };
 
     const getStatusText = (status) => {
         switch (status) {
-            case 'completed': return 'Завершен';
-            case 'pending': return 'В обработке';
-            case 'cancelled': return 'Отменен';
-            default: return status;
+            case 'completed':
+                return 'Завершен';
+            case 'pending':
+                return 'В обработке';
+            case 'cancelled':
+                return 'Отменен';
+            default:
+                return status;
         }
     };
 
@@ -181,7 +192,7 @@ function App() {
         <div className="dashboard">
             <Header onLogout={handleLogout} />
             <Stats stats={stats} />
-            <RecentOrdersTable 
+            <RecentOrdersTable
                 orders={sortedOrders}
                 sortBy={sortBy}
                 sortOrder={sortOrder}
@@ -193,7 +204,4 @@ function App() {
     );
 }
 
-
-
 export default App;
-

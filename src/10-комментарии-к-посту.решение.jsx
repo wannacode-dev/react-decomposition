@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
- 
+
 import './style.css';
 function CommentsHeader({ count }) {
     return (
@@ -18,15 +18,13 @@ function CommentItem({ comment, onLike, onReply }) {
             </div>
             <p className="comment-text">{comment.text}</p>
             <div className="comment-actions">
-                <button 
+                <button
                     className={comment.liked ? 'liked' : ''}
                     onClick={() => onLike(comment.id)}
                 >
                     {comment.liked ? '❤️' : '🤍'} {comment.likes}
                 </button>
-                <button onClick={() => onReply(comment.id)}>
-                    Ответить
-                </button>
+                <button onClick={() => onReply(comment.id)}>Ответить</button>
             </div>
         </div>
     );
@@ -35,9 +33,9 @@ function CommentItem({ comment, onLike, onReply }) {
 function CommentsList({ comments, onLike, onReply }) {
     return (
         <div className="comments-list">
-            {comments.map(comment => (
-                <CommentItem 
-                    key={comment.id} 
+            {comments.map((comment) => (
+                <CommentItem
+                    key={comment.id}
                     comment={comment}
                     onLike={onLike}
                     onReply={onReply}
@@ -50,13 +48,16 @@ function CommentsList({ comments, onLike, onReply }) {
 function AddComment({ value, onChange, onAdd, onKeyDown }) {
     return (
         <div className="add-comment">
-            <textarea 
+            <textarea
                 placeholder="Оставьте ваш комментарий... (Ctrl+Enter для отправки)"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 onKeyDown={onKeyDown}
             />
-            <button onClick={onAdd} disabled={!value.trim()}>
+            <button
+                onClick={onAdd}
+                disabled={!value.trim()}
+            >
                 Отправить
             </button>
         </div>
@@ -65,8 +66,22 @@ function AddComment({ value, onChange, onAdd, onKeyDown }) {
 
 function App() {
     const [comments, setComments] = useState([
-        { id: 1, user: 'Алексей', text: 'Отличная статья!', time: '2 часа назад', likes: 5, liked: false },
-        { id: 2, user: 'Мария', text: 'Спасибо за полезную информацию', time: '1 час назад', likes: 3, liked: false }
+        {
+            id: 1,
+            user: 'Алексей',
+            text: 'Отличная статья!',
+            time: '2 часа назад',
+            likes: 5,
+            liked: false,
+        },
+        {
+            id: 2,
+            user: 'Мария',
+            text: 'Спасибо за полезную информацию',
+            time: '1 час назад',
+            likes: 3,
+            liked: false,
+        },
     ]);
     const [newComment, setNewComment] = useState('');
 
@@ -78,28 +93,30 @@ function App() {
                 text: newComment.trim(),
                 time: 'только что',
                 likes: 0,
-                liked: false
+                liked: false,
             };
-            
+
             setComments([...comments, comment]);
             setNewComment('');
         }
     };
 
     const handleLike = (id) => {
-        setComments(comments.map(comment => 
-            comment.id === id 
-                ? { 
-                    ...comment, 
-                    likes: comment.liked ? comment.likes - 1 : comment.likes + 1,
-                    liked: !comment.liked
-                  }
-                : comment
-        ));
+        setComments(
+            comments.map((comment) =>
+                comment.id === id
+                    ? {
+                          ...comment,
+                          likes: comment.liked ? comment.likes - 1 : comment.likes + 1,
+                          liked: !comment.liked,
+                      }
+                    : comment
+            )
+        );
     };
 
     const handleReply = (id) => {
-        const comment = comments.find(c => c.id === id);
+        const comment = comments.find((c) => c.id === id);
         if (comment) {
             setNewComment(`@${comment.user} `);
         }
@@ -114,13 +131,13 @@ function App() {
     return (
         <div className="post-comments">
             <CommentsHeader count={comments.length} />
-            <CommentsList 
+            <CommentsList
                 comments={comments}
                 onLike={handleLike}
                 onReply={handleReply}
             />
-            <AddComment 
-                value={newComment} 
+            <AddComment
+                value={newComment}
                 onChange={setNewComment}
                 onAdd={handleAddComment}
                 onKeyDown={handleKeyDown}
@@ -129,7 +146,4 @@ function App() {
     );
 }
 
-
-
 export default App;
-

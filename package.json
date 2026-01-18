@@ -6,6 +6,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx}\"",
     "play:generate": "node scripts/generate-play-commands.mjs",
     "task:01": "cross-env VITE_ENTRY=src/01-профиль-пользователя.проблема.jsx vite",
     "solution-01": "cross-env VITE_ENTRY=src/01-профиль-пользователя.решение.jsx vite",
@@ -43,6 +45,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.7.0",
     "cross-env": "^10.0.0",
+    "prettier": "^3.8.0",
     "vite": "^6.3.6"
   }
 }

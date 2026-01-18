@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react';
- 
+
 import './style.css';
 function App() {
     const [stats, setStats] = useState({
         users: 1234,
         orders: 567,
-        revenue: 125000
+        revenue: 125000,
     });
     const [orders, setOrders] = useState([
         { id: '#12345', date: '2024-01-15', amount: 5000, status: 'completed' },
         { id: '#12346', date: '2024-01-14', amount: 3200, status: 'pending' },
         { id: '#12347', date: '2024-01-13', amount: 7800, status: 'completed' },
         { id: '#12348', date: '2024-01-12', amount: 2100, status: 'cancelled' },
-        { id: '#12349', date: '2024-01-11', amount: 9500, status: 'completed' }
+        { id: '#12349', date: '2024-01-11', amount: 9500, status: 'completed' },
     ]);
     const [sortBy, setSortBy] = useState('date');
     const [sortOrder, setSortOrder] = useState('desc');
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setStats(prevStats => ({
+            setStats((prevStats) => ({
                 users: prevStats.users + Math.floor(Math.random() * 3),
                 orders: prevStats.orders + Math.floor(Math.random() * 2),
-                revenue: prevStats.revenue + Math.floor(Math.random() * 1000)
+                revenue: prevStats.revenue + Math.floor(Math.random() * 1000),
             }));
         }, 5000);
 
@@ -65,19 +65,27 @@ function App() {
 
     const getStatusColor = (status) => {
         switch (status) {
-            case 'completed': return '#10b981';
-            case 'pending': return '#f59e0b';
-            case 'cancelled': return '#ef4444';
-            default: return '#6b7280';
+            case 'completed':
+                return '#10b981';
+            case 'pending':
+                return '#f59e0b';
+            case 'cancelled':
+                return '#ef4444';
+            default:
+                return '#6b7280';
         }
     };
 
     const getStatusText = (status) => {
         switch (status) {
-            case 'completed': return 'Завершен';
-            case 'pending': return 'В обработке';
-            case 'cancelled': return 'Отменен';
-            default: return status;
+            case 'completed':
+                return 'Завершен';
+            case 'pending':
+                return 'В обработке';
+            case 'cancelled':
+                return 'Отменен';
+            default:
+                return status;
         }
     };
 
@@ -87,12 +95,15 @@ function App() {
                 <h1>Панель управления</h1>
                 <div className="user-menu">
                     <span>Администратор</span>
-                    <button onClick={handleLogout} className="logout-btn">
+                    <button
+                        onClick={handleLogout}
+                        className="logout-btn"
+                    >
                         Выйти
                     </button>
                 </div>
             </header>
-            
+
             <div className="stats">
                 <div className="stat-card">
                     <h3>Пользователи</h3>
@@ -116,19 +127,19 @@ function App() {
                 <table className="recent-orders">
                     <thead>
                         <tr>
-                            <th 
+                            <th
                                 className="sortable"
                                 onClick={() => handleSort('id')}
                             >
                                 ID заказа {sortBy === 'id' && (sortOrder === 'asc' ? '↑' : '↓')}
                             </th>
-                            <th 
+                            <th
                                 className="sortable"
                                 onClick={() => handleSort('date')}
                             >
                                 Дата {sortBy === 'date' && (sortOrder === 'asc' ? '↑' : '↓')}
                             </th>
-                            <th 
+                            <th
                                 className="sortable"
                                 onClick={() => handleSort('amount')}
                             >
@@ -138,13 +149,13 @@ function App() {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedOrders.map(order => (
+                        {sortedOrders.map((order) => (
                             <tr key={order.id}>
                                 <td>{order.id}</td>
                                 <td>{order.date}</td>
                                 <td>{order.amount.toLocaleString()} ₽</td>
                                 <td>
-                                    <span 
+                                    <span
                                         className="status-badge"
                                         style={{ backgroundColor: getStatusColor(order.status) }}
                                     >
@@ -160,7 +171,4 @@ function App() {
     );
 }
 
-
-
 export default App;
-

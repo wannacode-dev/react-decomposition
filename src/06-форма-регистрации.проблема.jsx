@@ -1,5 +1,5 @@
 import React from 'react';
- 
+
 import './style.css';
 
 function App() {
@@ -9,28 +9,39 @@ function App() {
             <form>
                 <div className="form-group">
                     <label>Имя</label>
-                    <input type="text" placeholder="Введите ваше имя" />
+                    <input
+                        type="text"
+                        placeholder="Введите ваше имя"
+                    />
                 </div>
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="email" placeholder="Введите ваш email" />
+                    <input
+                        type="email"
+                        placeholder="Введите ваш email"
+                    />
                 </div>
                 <div className="form-group">
                     <label>Пароль</label>
-                    <input type="password" placeholder="Придумайте пароль" />
+                    <input
+                        type="password"
+                        placeholder="Придумайте пароль"
+                    />
                 </div>
                 <div className="form-group">
                     <label>Подтверждение пароля</label>
-                    <input type="password" placeholder="Повторите пароль" />
+                    <input
+                        type="password"
+                        placeholder="Повторите пароль"
+                    />
                 </div>
                 <button type="submit">Зарегистрироваться</button>
-                <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+                <p>
+                    Уже есть аккаунт? <a href="/login">Войти</a>
+                </p>
             </form>
         </div>
     );
 }
 
-
-
 export default App;
-

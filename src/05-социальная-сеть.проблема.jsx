@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
- 
+
 import './style.css';
 function App() {
     const [posts, setPosts] = useState([
@@ -9,10 +9,8 @@ function App() {
             content: 'Сегодня прекрасный день!',
             likes: 15,
             liked: false,
-            comments: [
-                { id: 1, user: 'Алексей', text: 'Полностью согласен!' }
-            ],
-            showComments: false
+            comments: [{ id: 1, user: 'Алексей', text: 'Полностью согласен!' }],
+            showComments: false,
         },
         {
             id: 2,
@@ -21,8 +19,8 @@ function App() {
             likes: 8,
             liked: false,
             comments: [],
-            showComments: false
-        }
+            showComments: false,
+        },
     ]);
     const [newPost, setNewPost] = useState('');
     const [newComment, setNewComment] = useState({});
@@ -36,7 +34,7 @@ function App() {
                 likes: 0,
                 liked: false,
                 comments: [],
-                showComments: false
+                showComments: false,
             };
             setPosts([post, ...posts]);
             setNewPost('');
@@ -44,23 +42,25 @@ function App() {
     };
 
     const handleLike = (postId) => {
-        setPosts(posts.map(post => 
-            post.id === postId 
-                ? { 
-                    ...post, 
-                    likes: post.liked ? post.likes - 1 : post.likes + 1,
-                    liked: !post.liked
-                  }
-                : post
-        ));
+        setPosts(
+            posts.map((post) =>
+                post.id === postId
+                    ? {
+                          ...post,
+                          likes: post.liked ? post.likes - 1 : post.likes + 1,
+                          liked: !post.liked,
+                      }
+                    : post
+            )
+        );
     };
 
     const handleToggleComments = (postId) => {
-        setPosts(posts.map(post => 
-            post.id === postId 
-                ? { ...post, showComments: !post.showComments }
-                : post
-        ));
+        setPosts(
+            posts.map((post) =>
+                post.id === postId ? { ...post, showComments: !post.showComments } : post
+            )
+        );
     };
 
     const handleAddComment = (postId) => {
@@ -69,19 +69,21 @@ function App() {
             const comment = {
                 id: Date.now(),
                 user: 'Вы',
-                text: commentText.trim()
+                text: commentText.trim(),
             };
-            
-            setPosts(posts.map(post => 
-                post.id === postId 
-                    ? { 
-                        ...post, 
-                        comments: [...post.comments, comment],
-                        showComments: true
-                      }
-                    : post
-            ));
-            
+
+            setPosts(
+                posts.map((post) =>
+                    post.id === postId
+                        ? {
+                              ...post,
+                              comments: [...post.comments, comment],
+                              showComments: true,
+                          }
+                        : post
+                )
+            );
+
             setNewComment({ ...newComment, [postId]: '' });
         }
     };
@@ -93,21 +95,24 @@ function App() {
     return (
         <div className="social-feed">
             <div className="create-post">
-                <textarea 
-                    placeholder="Что у вас нового?" 
+                <textarea
+                    placeholder="Что у вас нового?"
                     value={newPost}
                     onChange={(e) => setNewPost(e.target.value)}
                 />
-                <button 
+                <button
                     onClick={handleCreatePost}
                     disabled={!newPost.trim()}
                 >
                     Опубликовать
                 </button>
             </div>
-            
-            {posts.map(post => (
-                <div key={post.id} className="post">
+
+            {posts.map((post) => (
+                <div
+                    key={post.id}
+                    className="post"
+                >
                     <div className="post-header">
                         <div className="avatar-emoji">{post.author.avatar}</div>
                         <strong>{post.author.name}</strong>
@@ -115,37 +120,40 @@ function App() {
                     </div>
                     <p>{post.content}</p>
                     <div className="post-actions">
-                        <button 
+                        <button
                             className={`like-btn ${post.liked ? 'liked' : ''}`}
                             onClick={() => handleLike(post.id)}
                         >
                             {post.liked ? '❤️' : '🤍'} {post.likes}
                         </button>
-                        <button 
+                        <button
                             className="comment-btn"
                             onClick={() => handleToggleComments(post.id)}
                         >
                             💬 Комментировать ({post.comments.length})
                         </button>
                     </div>
-                    
+
                     {post.showComments && (
                         <div className="comments-section">
                             <div className="comments">
-                                {post.comments.map(comment => (
-                                    <div key={comment.id} className="comment">
+                                {post.comments.map((comment) => (
+                                    <div
+                                        key={comment.id}
+                                        className="comment"
+                                    >
                                         <strong>{comment.user}</strong>: {comment.text}
                                     </div>
                                 ))}
                             </div>
                             <div className="add-comment">
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     placeholder="Написать комментарий..."
                                     value={newComment[post.id] || ''}
                                     onChange={(e) => handleCommentChange(post.id, e.target.value)}
                                 />
-                                <button 
+                                <button
                                     onClick={() => handleAddComment(post.id)}
                                     disabled={!newComment[post.id]?.trim()}
                                 >
@@ -160,7 +168,4 @@ function App() {
     );
 }
 
-
-
 export default App;
-
